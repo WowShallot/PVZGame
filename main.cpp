@@ -8,7 +8,7 @@ int main()
 	ExMessage msg;
 	const int FPS = 60;
 
-	initgraph(1280, 720, EW_SHOWCONSOLE);
+	initgraph(1280, 720, EW_SHOWCONSOLE);//EW_SHOWCONSOLE显示控制台窗口
 
 	BeginBatchDraw();
 
@@ -20,16 +20,19 @@ int main()
 	{
 		DWORD frame_start_time = GetTickCount();
 
-		while (peekmessage(&msg))
+		//1.读取数据
+		while (peekmessage(&msg)) 
 		{
-			scene->on_input(msg);
+			scene->on_input(msg); 
 		}
 
-		scene->on_update();
+		//2.处理数据
+		scene->on_update(); 
 
 		cleardevice();
 
-		scene->on_draw();
+		//3.绘制画面
+		scene->on_draw(); 
 
 		FlushBatchDraw();
 

@@ -9,11 +9,11 @@ public:
 	Scene() = default;
 	~Scene() = default;
 
-	virtual void on_enter() {}
+	virtual void on_enter() {} // 重置场景状态
 	virtual void on_update() {}
 	virtual void on_draw() {}
 	virtual void on_input(const ExMessage& msg) {}
-	virtual void on_exit() {}
+	virtual void on_exit() {} // 重置场景状态
 
 private:
 
