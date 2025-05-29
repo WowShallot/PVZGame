@@ -1,13 +1,20 @@
 #include <graphics.h>
+#include "scene.h"
+#include "menu_scene.h"
+
 
 int main()
 {
 	ExMessage msg;
 	const int FPS = 60;
 
-	initgraph(1280, 720);
+	initgraph(1280, 720, EW_SHOWCONSOLE);
 
 	BeginBatchDraw();
+
+	Scene* scene = new MenuScene();
+
+	scene->on_enter();
 
 	while (true)
 	{
@@ -15,10 +22,14 @@ int main()
 
 		while (peekmessage(&msg))
 		{
-
+			scene->on_input(msg);
 		}
 
+		scene->on_update();
+
 		cleardevice();
+
+		scene->on_draw();
 
 		FlushBatchDraw();
 

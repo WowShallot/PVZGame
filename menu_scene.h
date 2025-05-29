@@ -30,7 +30,7 @@ public:
 
 	}
 	
-	void on_update() 
+	void on_exit() 
 	{
 		cout << "Ö÷²Ëµ¥ÍË³ö" << endl;
 	}
