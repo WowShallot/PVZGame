@@ -5,6 +5,7 @@
 
 extern Scene* menu_scene;//通过extern关键字
 extern Scene* game_scene;//获取到这两个全局指针的引用
+extern Scene* selector_scene;
 
 class SceneManager
 {
@@ -12,7 +13,8 @@ public:
 	enum class SceneType
 	{
 		Menu,
-		Game
+		Game,
+		Selector
 	};
 
 public:
@@ -36,6 +38,8 @@ public:
 		case SceneType::Game:
 			current_scene = game_scene;
 			break;
+		case SceneType::Selector:
+			current_scene = selector_scene;
 		default:
 			break;
 		}
