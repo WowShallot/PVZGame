@@ -23,5 +23,8 @@
     <ClInclude Include="scene.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="menu_scene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
