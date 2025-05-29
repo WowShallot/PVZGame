@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MENU_SCENE_H_
+#define _MENU_SCENE_H_
 
 #include "scene.h"
 #include <iostream>
@@ -38,3 +39,5 @@ public:
 private:
 
 };
+
+#endif // !_MENU_SCENE_H_

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _SCENE_H_
+#define _SCENE_H_
+
 #include <graphics.h>
 
 class Scene
@@ -16,3 +18,5 @@ public:
 private:
 
 };
+
+#endif // !_SCENE_H_
