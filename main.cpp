@@ -4,12 +4,17 @@
 #include "game_scene.h"
 #include "scene_manager.h"
 #include "selector_sccene.h"
+#include "util.h"
+#include "atlas.h"
 
 Scene* menu_scene = nullptr;
 Scene* game_scene = nullptr;
 Scene* selector_scene = nullptr;
 
 SceneManager scene_manager;
+
+void flip_atlas(Atlas& src, Atlas& dst);//用于图集翻转的函数
+
 
 int main()
 {
@@ -55,4 +60,15 @@ int main()
 	EndBatchDraw();
 
 	return 0;
+}
+
+void flip_atlas(Atlas& src, Atlas& dst)
+{
+	dst.clear();   //首先清空了目标图集中已有的图片，避免目标图集重复使用时出现问题                   
+	for (int i = 0; i < src.get_size(); i++) 
+	{
+		IMAGE img_flpipped;
+		flip_image(src.get_image(i), &img_flpipped);//对原图集中的每一张图片都进行flip_image操作
+		dst.add_image(img_flpipped);//通过add_image将翻转后的图片添加到目标图集
+	}
 }
