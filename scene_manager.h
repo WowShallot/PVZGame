@@ -3,6 +3,8 @@
 
 #include "scene.h"
 
+extern Scene* menu_scene;//通过extern关键字
+extern Scene* game_scene;//获取到这两个全局指针的引用
 
 class SceneManager
 {
@@ -17,7 +19,7 @@ public:
 	SceneManager() = default;
 	~SceneManager() = default;
 
-	void set_current_state(Scene* scene)//设置当前的场景
+	void set_current_scene(Scene* scene)//设置当前的场景
 	{
 		current_scene = scene;
 		current_scene->on_enter(); //确保场景的执行流程完整
@@ -29,13 +31,30 @@ public:
 		switch (type)              //然后找到新场景
 		{
 		case SceneType::Menu:
+			current_scene = menu_scene;
 			break;
 		case SceneType::Game:
+			current_scene = game_scene;
 			break;
 		default:
 			break;
 		}
 		current_scene->on_enter();  //最后跳转至新场景
+	}
+
+	void on_update()
+	{
+		current_scene->on_update();
+	}
+
+	void on_draw()
+	{
+		current_scene->on_draw();
+	}
+
+	void on_input(const ExMessage& msg)
+	{
+		current_scene->on_input(msg);
 	}
 
 private:

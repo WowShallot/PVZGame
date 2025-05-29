@@ -1,7 +1,13 @@
 #include <graphics.h>
 #include "scene.h"
 #include "menu_scene.h"
+#include "game_scene.h"
+#include "scene_manager.h"
 
+Scene* menu_scene = nullptr;
+Scene* game_scene = nullptr;
+
+SceneManager scene_manager;
 
 int main()
 {
@@ -12,9 +18,10 @@ int main()
 
 	BeginBatchDraw();
 
-	Scene* scene = new MenuScene();
+	menu_scene = new MenuScene();
+	game_scene = new GameScene();
 
-	scene->on_enter();
+	scene_manager.set_current_scene(menu_scene);
 
 	while (true)
 	{
@@ -23,16 +30,16 @@ int main()
 		//1.读取数据
 		while (peekmessage(&msg)) 
 		{
-			scene->on_input(msg); 
+			scene_manager.on_input(msg);
 		}
 
 		//2.处理数据
-		scene->on_update(); 
+		scene_manager.on_update();
 
 		cleardevice();
 
 		//3.绘制画面
-		scene->on_draw(); 
+		scene_manager.on_draw();
 
 		FlushBatchDraw();
 
