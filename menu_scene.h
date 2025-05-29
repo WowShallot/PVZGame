@@ -1,9 +1,13 @@
 #ifndef _MENU_SCENE_H_
 #define _MENU_SCENE_H_
 
-#include "scene.h"
 #include <iostream>
+#include "scene.h"
+#include "scene_manager.h"
+
 using namespace std;
+
+extern SceneManager scene_manager;
 
 class MenuScene : public Scene
 {
@@ -28,7 +32,10 @@ public:
 
 	void on_input(const ExMessage& msg) 
 	{
-
+		if (msg.message == WM_KEYDOWN)
+		{
+			scene_manager.switch_to(SceneManager::SceneType::Game);
+		}
 	}
 	
 	void on_exit() 
