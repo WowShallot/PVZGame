@@ -7,6 +7,7 @@
 #include "animation.h"
 #include "atlas.h"
 #include "camera.h"
+#include "timer.h"
 
 using namespace std;
 
@@ -25,10 +26,19 @@ public:
 		animation_peashooter_run_right.set_atlas(&atlas_peashooter_run_right);  //设置图集
 		animation_peashooter_run_right.set_interval(75);						//设置帧间隔
 		animation_peashooter_run_right.set_loop(true);							//设置循环
+
+		timer.set_wait_time(1000);  //设置计时器在一秒后输出 Shot！字符串；并让其可多次触发
+		timer.set_one_shot(false);
+		timer.set_callback([]()
+			{
+				cout << "Shot!" << endl;
+			});
+
 	}
 
 	void on_update(int delta) 
 	{
+		timer.on_update(delta);
 		camera.on_update(delta);
 		animation_peashooter_run_right.on_update(delta);
 	}
@@ -53,6 +63,7 @@ public:
 	}
 
 private:
+	Timer timer;
 	Camera camera;
 	Animation animation_peashooter_run_right;
 
