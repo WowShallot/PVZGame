@@ -5,11 +5,12 @@
 
 #pragma comment(lib, "MSIMG32.LIB") // 不要忘记添加库文件的链接，与putimage_alpha定义相关
 
-inline void putimage_alpha(int dst_x, int dst_y, IMAGE* img)  // 设置图片带透明度
+inline void putimage_alpha(const Camera& camera, int dst_x, int dst_y, IMAGE* img)  // 设置图片带透明度
 {
 	int w = img->getwidth();
 	int h = img->getheight();
-	AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
+	const Vector2& pos_camera = camera.get_position();
+	AlphaBlend(GetImageHDC(GetWorkingImage()), (int)(dst_x - pos_camera.x), (int)(dst_y - pos_camera.x), w, h,
 		GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA });
 }
 

@@ -3,7 +3,7 @@
 
 #include "atlas.h"
 #include "util.h"
-
+#include "camera.h"
 #include <graphics.h>
 #include <functional>
 
@@ -92,9 +92,9 @@ public:
 	}
 
 	//动画渲染，设置透明度
-	void on_draw(int x, int y) const  //const 表示常量成员函数，不会修改类的任何成员变量，即不会修改对象的状态
+	void on_draw(const Camera& camera, int x, int y) const  //const 表示常量成员函数，不会修改类的任何成员变量，即不会修改对象的状态
 	{
-		putimage_alpha(x, y, atlas->get_image(idx_frame));
+		putimage_alpha(camera, x, y, atlas->get_image(idx_frame));
 	}
 
 	

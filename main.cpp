@@ -99,6 +99,9 @@ int main()
 
 	initgraph(1280, 720, EW_SHOWCONSOLE);//EW_SHOWCONSOLE显示控制台窗口
 
+	settextstyle(28, 0, _T("IPix"));  //设置字体样式
+	setbkmode(TRANSPARENT);			  //设置文本背景色为透明
+
 	BeginBatchDraw();
 
 	menu_scene = new MenuScene();
