@@ -6,6 +6,7 @@
 #include "scene_manager.h"
 #include "animation.h"
 #include "atlas.h"
+#include "camera.h"
 
 using namespace std;
 
@@ -22,15 +23,8 @@ public:
 	void on_enter()
 	{
 		animation_peashooter_run_right.set_atlas(&atlas_peashooter_run_right);  //设置图集
-		animation_peashooter_run_right.set_interval(300);						//设置帧间隔
-		animation_peashooter_run_right.set_loop(false);							//设置循环
-		//为动画播放结束的事件设置一个回调函数  lambda匿名函数
-		animation_peashooter_run_right.set_callback(
-			[]()
-			{
-				scene_manager.switch_to(SceneManager::SceneType::Game);
-			}
-		);
+		animation_peashooter_run_right.set_interval(75);						//设置帧间隔
+		animation_peashooter_run_right.set_loop(true);							//设置循环
 	}
 
 	void on_update(int delta) 
@@ -40,7 +34,8 @@ public:
 
 	void on_draw() 
 	{
-		animation_peashooter_run_right.on_draw(100, 100);//调用动画对象的on_draw方法，将其绘制在（100，100）处
+		const Vector2& pos_camera = camera.get_position();
+		animation_peashooter_run_right.on_draw((int)(100 - pos_camera.x), (int)(100 - pos_camera.y));
 	}
 
 	void on_input(const ExMessage& msg) 
@@ -57,6 +52,7 @@ public:
 	}
 
 private:
+	Camera camera;
 	Animation animation_peashooter_run_right;
 
 };
