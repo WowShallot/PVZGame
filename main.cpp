@@ -116,7 +116,11 @@ int main()
 		}
 
 		//2.处理数据
-		scene_manager.on_update();
+		static DWORD last_tick_time = GetTickCount();
+		DWORD current_tick_time = GetTickCount();
+		DWORD delta_tick = current_tick_time - last_tick_time; //计算上一次调用on_update和这一次调用的时间间隔
+		scene_manager.on_update(delta_tick);
+		last_tick_time = current_tick_time;
 
 		cleardevice();
 

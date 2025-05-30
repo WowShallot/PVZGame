@@ -4,8 +4,12 @@
 #include <iostream>
 #include "scene.h"
 #include "scene_manager.h"
+#include "animation.h"
+#include "atlas.h"
 
 using namespace std;
+
+extern Atlas atlas_peashooter_run_right;
 
 extern SceneManager scene_manager;
 
@@ -17,17 +21,19 @@ public:
 
 	void on_enter()
 	{
-		cout << "进入主菜单" << endl;
+		animation_peashooter_run_right.set_atlas(&atlas_peashooter_run_right);  //设置图集
+		animation_peashooter_run_right.set_interval(75);						//设置帧间隔
+		animation_peashooter_run_right.set_loop(true);							//设置循环
 	}
 
-	void on_update() 
+	void on_update(int delta) 
 	{
-		cout << "主菜单正在运行..." << endl;
+		animation_peashooter_run_right.on_update(delta);
 	}
 
 	void on_draw() 
 	{
-		outtextxy(10, 10, _T("主菜单绘图内容"));
+		animation_peashooter_run_right.on_draw(100, 100);//调用动画对象的on_draw方法，将其绘制在（100，100）处
 	}
 
 	void on_input(const ExMessage& msg) 
@@ -44,6 +50,7 @@ public:
 	}
 
 private:
+	Animation animation_peashooter_run_right;
 
 };
 

@@ -25,7 +25,7 @@ public:
 		cout << "游戏正在运行..." << endl;
 	}
 
-	void on_draw()
+	void on_draw(int delta)
 	{
 		outtextxy(10, 10, _T("游戏局内绘图内容"));
 	}
