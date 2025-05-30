@@ -6,10 +6,11 @@
 #include "selector_sccene.h"
 #include "util.h"
 #include "atlas.h"
+#include "camera.h"
 
 #pragma comment(lib, "Winmm.lib")
 
-IMAGE img_menu_backgroud;                           // 主菜单背景图片
+IMAGE img_menu_background;                           // 主菜单背景图片
 
 IMAGE img_VS;										// VS 艺术字图片
 IMAGE img_1P;										// 1P 文本图片
@@ -82,6 +83,7 @@ Scene* menu_scene = nullptr;
 Scene* game_scene = nullptr;
 Scene* selector_scene = nullptr;
 
+Camera main_camera;
 SceneManager scene_manager;
 
 void flip_atlas(Atlas& src, Atlas& dst);//用于图集翻转的函数
@@ -125,7 +127,7 @@ int main()
 		cleardevice();
 
 		//3.绘制画面
-		scene_manager.on_draw();
+		scene_manager.on_draw(main_camera);
 
 		FlushBatchDraw();
 
@@ -157,7 +159,7 @@ void load_game_resoutces()
 	AddFontResourceEx(_T("resources/IPix.ttf"), FR_PRIVATE, NULL);
 
 	//2.加载图片资源
-	loadimage(&img_menu_backgroud, _T("resources/menu_backgroud.png"));
+	loadimage(&img_menu_background, _T("resources/menu_background.png"));
 
 	loadimage(&img_VS, _T("resources/VS.png"));
 	loadimage(&img_1P, _T("resources/1P.png"));

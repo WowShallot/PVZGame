@@ -20,12 +20,12 @@ public:
 		cout << "进入游戏局内场景" << endl;
 	}
 
-	void on_update()
+	void on_update(int delta)
 	{
 		cout << "游戏正在运行..." << endl;
 	}
 
-	void on_draw(int delta)
+	void on_draw(const Camera& camera)
 	{
 		outtextxy(10, 10, _T("游戏局内绘图内容"));
 	}

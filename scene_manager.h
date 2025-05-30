@@ -2,6 +2,7 @@
 #define _SCENE_MANAGER_H_
 
 #include "scene.h"
+#include "camera.h"
 
 extern Scene* menu_scene;//通过extern关键字
 extern Scene* game_scene;//获取到这两个全局指针的引用
@@ -51,9 +52,9 @@ public:
 		current_scene->on_update(delta);
 	}
 
-	void on_draw()
+	void on_draw(const Camera& camera)
 	{
-		current_scene->on_draw();
+		current_scene->on_draw(camera);
 	}
 
 	void on_input(const ExMessage& msg)
