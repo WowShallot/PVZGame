@@ -24,7 +24,8 @@ public:
 
 	void on_update(int delta)
 	{
-
+		const Vector2 speed = { -0.35f, 0 }; //给摄像机一个水平向左的速度
+		position += speed * (float)delta;    //让摄像机随着时间逐渐向左移动
 	}
 
 private:

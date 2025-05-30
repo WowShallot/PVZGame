@@ -29,6 +29,7 @@ public:
 
 	void on_update(int delta) 
 	{
+		camera.on_update(delta);
 		animation_peashooter_run_right.on_update(delta);
 	}
 
