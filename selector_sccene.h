@@ -134,12 +134,12 @@ public:
 			selector_background_scorll_offset_x, 0, img_p2_selector_background, selector_background_scorll_offset_x, 0);
 		putimage_alpha(getwidth() - selector_background_scorll_offset_x, 0, img_p2_selector_background);
 
-		putimage_alpha(camera, pos_img_VS.x, pos_img_VS.y, &img_VS);
+		putimage_alpha(pos_img_VS.x, pos_img_VS.y, &img_VS);
 
-		putimage_alpha(camera, pos_img_1P.x, pos_img_1P.y, &img_1P);
-		putimage_alpha(camera, pos_img_2P.x, pos_img_2P.y, &img_2P);
-		putimage_alpha(camera, pos_img_1P_gravestone.x, pos_img_1P_gravestone.y, &img_gravestone_right);
-		putimage_alpha(camera, pos_img_2P_gravestone.x, pos_img_2P_gravestone.y, &img_gravestone_left);
+		putimage_alpha(pos_img_1P.x, pos_img_1P.y, &img_1P);
+		putimage_alpha(pos_img_2P.x, pos_img_2P.y, &img_2P);
+		putimage_alpha(pos_img_1P_gravestone.x, pos_img_1P_gravestone.y, &img_gravestone_right);
+		putimage_alpha(pos_img_2P_gravestone.x, pos_img_2P_gravestone.y, &img_gravestone_left);
 
 		switch (player_type_1)
 		{
@@ -169,15 +169,78 @@ public:
 			break;
 		}
 
-		putimage_alpha(camera, pos_img_1P_desc.x, pos_img_1P_desc.y, &img_1P_desc);
-		putimage_alpha(camera, pos_img_2P_desc.x, pos_img_2P_desc.y, &img_2P_desc);
+		putimage_alpha(pos_1P_selector_btn_left.x, pos_1P_selector_btn_left.y,
+			is_btn_1P_left_down ? &img_1P_selector_btn_down_left : &img_1P_selector_btn_idle_left);
+		putimage_alpha(pos_1P_selector_btn_right.x, pos_1P_selector_btn_right.y,
+			is_btn_1P_right_down ? &img_1P_selector_btn_down_right : &img_1P_selector_btn_idle_right);
+		putimage_alpha(pos_2P_selector_btn_left.x, pos_2P_selector_btn_left.y,
+			is_btn_2P_left_down ? &img_2P_selector_btn_down_left : &img_2P_selector_btn_idle_left);
+		putimage_alpha(pos_2P_selector_btn_right.x, pos_2P_selector_btn_right.y,
+			is_btn_2P_right_down ? &img_2P_selector_btn_down_right : &img_2P_selector_btn_idle_right);
 
-		putimage_alpha(camera, pos_img_tip.x, pos_img_tip.y, &img_selector_tip);
+		putimage_alpha(pos_img_1P_desc.x, pos_img_1P_desc.y, &img_1P_desc);
+		putimage_alpha(pos_img_2P_desc.x, pos_img_2P_desc.y, &img_2P_desc);
+
+		putimage_alpha(pos_img_tip.x, pos_img_tip.y, &img_selector_tip);
 	}
 
 	void on_input(const ExMessage& msg)
 	{
-
+		switch (msg.message)
+		{
+		case WM_KEYDOWN:
+			switch (msg.vkcode)
+			{
+				// 'A'
+			case 0x41:
+				is_btn_1P_left_down = true;
+				break;
+				// 'D'
+			case 0x44:
+				is_btn_1P_right_down = true;
+				break;
+				//'←'
+			case VK_LEFT:
+				is_btn_2P_left_down = true;
+				break;
+				//'→'
+			case VK_RIGHT:
+				is_btn_2P_right_down = true;
+				break;
+			}
+			break;
+		case WM_KEYUP:
+			switch (msg.vkcode)
+			{
+				// 'A'
+			case 0x41:
+				is_btn_1P_left_down = false;
+				player_type_1 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_1 - 1) % (int)PlayerType::Invalid);
+				mciSendString(_T("play ui_switch from 0"), NULL, 0, NULL);
+				break;
+				// 'D'
+			case 0x44:
+				is_btn_1P_right_down = false;
+				player_type_1 = (PlayerType)(((int)player_type_1 + 1) % (int)PlayerType::Invalid);
+				mciSendString(_T("play ui_switch from 0"), NULL, 0, NULL);
+				break;
+				//'←'
+			case VK_LEFT:
+				is_btn_2P_left_down = false;
+				player_type_2 = (PlayerType)(((int)PlayerType::Invalid + (int)player_type_2 - 1) % (int)PlayerType::Invalid);
+				mciSendString(_T("play ui_switch from 0"), NULL, 0, NULL);
+				break;
+				//'→'
+			case VK_RIGHT:
+				is_btn_2P_right_down = false;
+				player_type_2 = (PlayerType)(((int)player_type_2 + 1) % (int)PlayerType::Invalid);
+				mciSendString(_T("play ui_switch from 0"), NULL, 0, NULL);
+				break;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	void on_exit() 
@@ -221,6 +284,11 @@ private:
 	LPCTSTR str_sunflower_name = _T("龙日葵");			// 龙日葵角色名
 
 	int selector_background_scorll_offset_x = 0;		// 背景板滚动距离
+
+	bool is_btn_1P_left_down = false;					// 1P 向左切换按钮是否按下
+	bool is_btn_1P_right_down = false;					// 1P 向右切换按钮是否按下
+	bool is_btn_2P_left_down = false;					// 2P 向左切换按钮是否按下
+	bool is_btn_2P_right_down = false;					// 2P 向右切换按钮是否按下
 
 private:
 	//绘制带有阴影的文本
