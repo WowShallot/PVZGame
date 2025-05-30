@@ -22,8 +22,15 @@ public:
 	void on_enter()
 	{
 		animation_peashooter_run_right.set_atlas(&atlas_peashooter_run_right);  //设置图集
-		animation_peashooter_run_right.set_interval(75);						//设置帧间隔
-		animation_peashooter_run_right.set_loop(true);							//设置循环
+		animation_peashooter_run_right.set_interval(300);						//设置帧间隔
+		animation_peashooter_run_right.set_loop(false);							//设置循环
+		//为动画播放结束的事件设置一个回调函数  lambda匿名函数
+		animation_peashooter_run_right.set_callback(
+			[]()
+			{
+				scene_manager.switch_to(SceneManager::SceneType::Game);
+			}
+		);
 	}
 
 	void on_update(int delta) 
