@@ -86,11 +86,53 @@ public:
 	{
 		animation_peashooter.on_update(delta);
 		animation_sunflower.on_update(delta);
+
+		selector_background_scorll_offset_x += 5;
+		if (selector_background_scorll_offset_x >= img_peashooter_selector_background_left.getwidth())
+			selector_background_scorll_offset_x = 0;
 	}
 
 	void on_draw(const Camera& camera)
 	{
+		IMAGE* img_p1_selector_background = nullptr;
+		IMAGE* img_p2_selector_background = nullptr;
+
+		switch (player_type_2)
+		{
+		case PlayerType::Peashooter:
+			img_p1_selector_background = &img_peashooter_selector_background_right;
+			break;
+		case PlayerType::Sunflower:
+			img_p1_selector_background = &img_sunflower_selector_background_right;
+			break;
+		default:
+			img_p1_selector_background = &img_peashooter_selector_background_right;
+			break;
+		}
+
+		switch (player_type_1)
+		{
+		case PlayerType::Peashooter:
+			img_p2_selector_background = &img_peashooter_selector_background_left;
+			break;
+		case PlayerType::Sunflower:
+			img_p2_selector_background = &img_sunflower_selector_background_left;
+			break;
+		default:
+			img_p2_selector_background = &img_peashooter_selector_background_left;
+			break;
+		}
+
 		putimage(0, 0, &img_selector_background);
+
+		//根据selector_background_scorll_offset_x记录的虚拟线条的位置，对两个角色背景剪影图进行裁切，
+		//每个玩家背后的背景图都是在线条左侧和线条右侧绘制两次
+		putimage_alpha(selector_background_scorll_offset_x - img_p1_selector_background->getwidth(), 0, img_p1_selector_background);
+		putimage_alpha(selector_background_scorll_offset_x, 0, 
+			img_p1_selector_background->getwidth() - selector_background_scorll_offset_x, 0, img_p1_selector_background, 0, 0);
+		putimage_alpha(getwidth() - img_p2_selector_background->getwidth(), 0, img_p2_selector_background->getwidth() - 
+			selector_background_scorll_offset_x, 0, img_p2_selector_background, selector_background_scorll_offset_x, 0);
+		putimage_alpha(getwidth() - selector_background_scorll_offset_x, 0, img_p2_selector_background);
 
 		putimage_alpha(camera, pos_img_VS.x, pos_img_VS.y, &img_VS);
 
@@ -177,6 +219,8 @@ private:
 
 	LPCTSTR str_peashooter_name = _T("婉逗射手");		// 婉逗射手角色名
 	LPCTSTR str_sunflower_name = _T("龙日葵");			// 龙日葵角色名
+
+	int selector_background_scorll_offset_x = 0;		// 背景板滚动距离
 
 private:
 	//绘制带有阴影的文本
