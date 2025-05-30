@@ -3,6 +3,16 @@
 
 #include <graphics.h>
 
+#pragma comment(lib, "MSIMG32.LIB") // 不要忘记添加库文件的链接，与putimage_alpha定义相关
+
+inline void putimage_alpha(int dst_x, int dst_y, IMAGE* img)  // 设置图片带透明度
+{
+	int w = img->getwidth();
+	int h = img->getheight();
+	AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
+		GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA });
+}
+
 inline void flip_image(IMAGE* src, IMAGE* dst) //src--翻转前的原图片， dst--翻转后的目标图片
 {
 	int w = src->getwidth();
